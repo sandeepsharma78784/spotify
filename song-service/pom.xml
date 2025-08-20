@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sandeep</groupId>
-	<artifactId>application</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>application</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>songs</artifactId>
+	<version>1.0</version>
+	<name>songs</name>
+	<description>microservice that handle add/delete songs and fetch and download songs.</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -38,6 +38,31 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- for actuator -->
+	<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+	<!-- for security -->
+	<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+	<!-- JWT -->
+    <dependency>
+      <groupId>com.auth0</groupId>
+      <artifactId>java-jwt</artifactId>
+      <version>4.4.0</version>
+    </dependency>
+<!-- Lombok (optional - if you prefer no boilerplate) -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+
+	  <!-- postgres driver -->
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
