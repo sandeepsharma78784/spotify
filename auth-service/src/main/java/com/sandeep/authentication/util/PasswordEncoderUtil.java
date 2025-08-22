@@ -14,7 +14,7 @@ public class PasswordEncoderUtil {
         return new BCryptPasswordEncoder();
     }
 
-      private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public static String encode(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
