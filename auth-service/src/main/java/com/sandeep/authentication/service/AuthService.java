@@ -49,4 +49,19 @@ public class AuthService {
         return jwtUtil.generateToken(claims,user.getUsername());
         // ye token  controller ki ya dusri ms k controller ki methods use kregi
     }
+
+
+// iske caller ne map ka use nahi kiya to optional ki jarurat nahi he
+     public User createUser(User user) {
+        // Duplicate check
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new DuplicateResourceException("Username already exists: " + user.getUsername());
+        }
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new DuplicateResourceException("Email already exists: " + user.getEmail());
+        }
+
+        return userRepository.save(user);
+    }
+
 }
