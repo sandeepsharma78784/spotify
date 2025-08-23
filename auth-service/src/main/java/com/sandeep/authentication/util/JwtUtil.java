@@ -34,6 +34,27 @@ public class JwtUtil {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
+
+ public Claims getClaims(String token) {
+
+         return    Jwts.parser()
+                   .verifyWith(this.secretKey)          // replaces setSigningKey(), safer type
+                   .build()
+                   .parseSignedClaims(token)   // updated parsing method
+                   .getPayload();
+                   // below are are depricated in jjwt version that we are using
+
+        // return Jwts.parserBuilder()
+        //            .setSigningKey(this.secretKey)
+        //            .build()
+        //            .parseClaimsJws(token)
+        //            .getBody();
+
+        //  return Jwts.parser()
+        //            .setSigningKey(secret.getBytes()) // directly use secret
+        //            .parseClaimsJws(token)
+        //            .getBody();
+    }
     /**
      * Generate token with claims
      */
@@ -48,6 +69,9 @@ public class JwtUtil {
     //             .compact();
     // }
 
+public String extractRole(String token) {
+    return getClaims(token).get("role", String.class);
+}
     public String generateToken(Map<String, Object> claims, String subject) {
     return Jwts.builder()
             .addClaims(claims) // custom claims
@@ -57,6 +81,7 @@ public class JwtUtil {
             .signWith(secretKey, Jwts.SIG.HS256) // ✅ requires javax.crypto.SecretKey
             .compact();
 }
+
 
 // chaininh , user ne older version user kr rah eh but idr tech u[date ho gaya to usko to puran wala style and yaha se hum naya wlaa]
 public String generateToken(String subject) {
@@ -101,6 +126,11 @@ public String generateToken(String subject) {
         return (extractedUsername.equals(username) && !isTokenExpired(token));
     }
 
+
+  // Validate token without UserDetails (optional, simple check)
+    public boolean validateToken(String token) {
+        return !isTokenExpired(token);
+    }
     /**
      * Check expiration
      */
