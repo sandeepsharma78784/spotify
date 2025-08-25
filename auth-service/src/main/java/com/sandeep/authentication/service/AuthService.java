@@ -36,6 +36,7 @@ public class AuthService {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("Invalid username or password"));
 
+System.out.println(request.getPassword()+"  --  "+user.getPasswordHash());
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new BadCredentialsException("Invalid username or password");
         }
@@ -53,6 +54,7 @@ public class AuthService {
 
 // iske caller ne map ka use nahi kiya to optional ki jarurat nahi he
      public User createUser(User user) {
+        System.out.println(user);
         // Duplicate check
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new DuplicateResourceException("Username already exists: " + user.getUsername());
@@ -60,7 +62,7 @@ public class AuthService {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new DuplicateResourceException("Email already exists: " + user.getEmail());
         }
-
+user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         return userRepository.save(user);
     }
 
